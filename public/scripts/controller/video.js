@@ -59,6 +59,10 @@ define([
 
             pauseVideo: function() {
                 this.player.pauseVideo();
+            },
+
+            getTime: function() {
+                
             }
 
         };
