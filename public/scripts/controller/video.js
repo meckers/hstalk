@@ -5,27 +5,60 @@ define([
 
         return {
 
+            player: null,
+            done: false,
+
             init: function() {
                 this.listen();
+                this.loadAPI();
             },
 
             listen: function() {
-                Events.register('VIDEO_STATE_CHANGE', this, _.bind(this.videoStateChange, this));
-                Events.register('VIDEO_PLAYER_READY', this, _.bind(this.videoPlayerReady, this));
-                Events.register('PAUSE_AND_COMMENT', this, _.bind(this.stopVideo, this));
+                this.initGlobalYTHandlers();
+                Events.register('STOP_VIDEO', this, _.bind(this.stopVideo, this));
+                Events.register('PAUSE_VIDEO', this, _.bind(this.pauseVideo, this));
             },
 
-            videoPlayerReady: function(event) {
-                console.log('video player ready', event);
-                event.target.playVideo();
+            loadAPI: function() {
+                // 2. This code loads the IFrame Player API code asynchronously.
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);                
             },
 
-            videoStateChange: function(event) {
-                console.log('video state change', event);
+            initPlayer: function() {
+                this.player = new YT.Player('player', {
+                    height: '390',
+                    width: '640',
+                    videoId: 'M7lc1UVf-VE',
+                    events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                    }
+                });
             },
 
-            stopVideo: function(event) {
-                Events.trigger('PAUSE_VIDEO');
+            initGlobalYTHandlers: function() {
+
+                window.onYouTubeIframeAPIReady = _.bind(this.initPlayer, this);
+
+                window.onPlayerReady = _.bind(function(event) {
+                    Events.trigger('VIDEO_PLAYER_READY', event);
+                    event.target.playVideo();
+                }, this);
+
+                window.onPlayerStateChange = _.bind(function(event) {
+                    Events.trigger('VIDEO_STATE_CHANGE', event);
+                }, this);
+            },
+
+            stopVideo: function() {
+                this.player.stopVideo();
+            },
+
+            pauseVideo: function() {
+                this.player.pauseVideo();
             }
 
         };

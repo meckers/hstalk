@@ -1,8 +1,9 @@
 define([
+    'controller/video',
     'lib/events',
     'underscore',
-    'jquery'
-], function(Events, _, $) {
+    'jquery'    
+], function(Video, Events, _, $) {
 
         return {
 
@@ -18,7 +19,7 @@ define([
 
             pauseAndComment: function() {
                 console.log('pause and comment!');
-                Events.trigger('PAUSE_AND_COMMENT');
+                Video.pauseVideo();
                 this.createForm();
             },
 
