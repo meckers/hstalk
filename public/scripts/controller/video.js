@@ -12,6 +12,7 @@ define([
             listen: function() {
                 Events.register('VIDEO_STATE_CHANGE', this, _.bind(this.videoStateChange, this));
                 Events.register('VIDEO_PLAYER_READY', this, _.bind(this.videoPlayerReady, this));
+                Events.register('PAUSE_AND_COMMENT', this, _.bind(this.stopVideo, this));
             },
 
             videoPlayerReady: function(event) {
@@ -21,6 +22,10 @@ define([
 
             videoStateChange: function(event) {
                 console.log('video state change', event);
+            },
+
+            stopVideo: function(event) {
+                Events.trigger('PAUSE_VIDEO');
             }
 
         };

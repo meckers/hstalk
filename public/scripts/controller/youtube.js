@@ -15,6 +15,8 @@ define([
 
             listen: function() {
                 this.initGlobalYTHandlers();
+                Events.register('STOP_VIDEO', this, _.bind(this.stopVideo, this));
+                Events.register('PAUSE_VIDEO', this, _.bind(this.pauseVideo, this));
             },
 
             loadAPI: function() {
@@ -39,7 +41,7 @@ define([
 
             initGlobalYTHandlers: function() {
 
-                window.onYouTubeIframeAPIReady = this.initPlayer;
+                window.onYouTubeIframeAPIReady = _.bind(this.initPlayer, this);
 
                 window.onPlayerReady = _.bind(function(event) {
                     Events.trigger('VIDEO_PLAYER_READY', event);
@@ -52,6 +54,10 @@ define([
 
             stopVideo: function() {
                 this.player.stopVideo();
+            },
+
+            pauseVideo: function() {
+                this.player.pauseVideo();
             }
 
         };

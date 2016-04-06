@@ -2,9 +2,10 @@ define([
     'controller/mediator',
     'controller/youtube',
     'controller/video',
+    'controller/comment',
     'lib/events'
 ],
-    function(Mediator, YouTube, Video, Events) {
+    function(Mediator, YouTube, Video, Comment, Events) {
 
         return {
 
@@ -19,6 +20,7 @@ define([
                 Mediator.init();
                 Video.init();
                 YouTube.init();
+                Comment.init();
             }
 
         };

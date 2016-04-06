@@ -9,7 +9,8 @@
         require.config({
             paths: {
                 'baseUrl': '/public/scripts',
-                'underscore': '/scripts/lib/underscore-min'
+                'underscore': '/scripts/lib/underscore-min',
+                'jquery': '/scripts/lib/jquery-2.1.4.min'
             },
             "packages": [
                 {
@@ -20,5 +21,7 @@
   </head>
   <body>
 	<div id="player"></div>
+	<input type="button" value="COMMENT" id="comment-button"/>
+	<div id="comment-area"></div>
   </body>
 </html>
