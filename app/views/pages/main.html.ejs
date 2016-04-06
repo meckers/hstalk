@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/screen.css" />
+    <script src="/scripts/lib/jquery-2.1.4.min.js"></script>
+	<script data-main="/scripts/main.js" language="javascript" src="/scripts/lib/require.js"></script>
+    <script>
+        require.config({
+            paths: {
+                'baseUrl': '/public/scripts',
+                'underscore': '/scripts/lib/underscore-min'
+            },
+            "packages": [
+                {
+                }
+            ]          
+        });
+    </script>	
+  </head>
+  <body>
+	<div id="player"></div>
+  </body>
+</html>
