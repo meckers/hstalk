@@ -15,8 +15,6 @@ define([
 
             listen: function() {
                 this.initGlobalYTHandlers();
-                Events.register('STOP_VIDEO', this, _.bind(this.stopVideo, this));
-                Events.register('PAUSE_VIDEO', this, _.bind(this.pauseVideo, this));
             },
 
             loadAPI: function() {
@@ -31,7 +29,7 @@ define([
                 this.player = new YT.Player('player', {
                     height: '390',
                     width: '640',
-                    videoId: 'M7lc1UVf-VE',
+                    videoId: 'IMKuVsGhVuU',
                     events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange

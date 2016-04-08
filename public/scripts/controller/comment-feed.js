@@ -19,6 +19,9 @@ define([
             },
 
             onVideoStateChange: function(event) {
+                
+                this.renderFeed();
+
                 if (event.data == YT.PlayerState.PLAYING) {
                     this.startPoll();      
                 }                
@@ -35,9 +38,8 @@ define([
                 window.clearInterval(this.pollInterval);
             },
 
-            poll: function() {
-                var time = Video.getTime();
-                this.renderFeed(time);
+            poll: function() {                
+                this.renderFeed();
             },
 
             addComment: function(comment) {
@@ -55,7 +57,6 @@ define([
                 var resultingComments = _.filter(sortedComments, function(c) {
                     return c.time < time;
                 });
-                console.log('comments before ' + time + ':', resultingComments);
                 return resultingComments;
             },
 
@@ -66,7 +67,8 @@ define([
             },
 
             // this could probably be lifted out to a UI class/controller
-            renderFeed: function(time) {
+            renderFeed: function() {
+                var time = Video.getTime();
                 var feedList = $('#feed-list');
                 feedList.empty();
                 var comments = this.getCommentsBefore(time);
