@@ -1,50 +1,46 @@
 define([
     'controller/video',
+    'controller/comment-feed',
     'lib/events',
     'underscore',
     'jquery'    
-], function(Video, Events, _, $) {
+], function(Video, CommentFeed, Events, _, $) {
 
         return {
 
-            comments: [],
-
             init: function() {
-                this.listen();
+                this.listen();                
             },
 
             listen: function() {                
                 $('#comment-button').click(_.bind(this.pauseAndComment, this));
+                $('#add-comment-button').click(_.bind(this.doComment, this));
             },
 
             pauseAndComment: function() {
-                console.log('pause and comment!');
                 Video.pauseVideo();
-                this.createForm();
+                this.showForm();
             },
 
-            createForm: function() {
-                var input = $('<input></input>');
-                input.attr('type', 'text');
-                input.attr('id', 'comment-text');
-                input.css({
-                    'width': '300px'
-                });
-                $('#comment-area').append(input);
-                var button = $('<input></input>');                
-                button.attr('type', 'button');
-                button.attr('value', 'comment');
-                button.click(_.bind(this.doComment, this));
-                $('#comment-area').append(button);
-                input.focus();
+            showForm: function() {
+                $('#comment-area').css('display', 'block');
+            },
+
+            hideForm: function(clear) {
+                if (clear) {
+                    $('#comment-text').val('');
+                }
+                $('#comment-area').css('display', 'none');  
             },
 
             doComment: function() {
+                var time = Video.getTime();
                 var comment = {
-                    text: $('#comment-text').value
+                    text: $('#comment-text').val(),
+                    time: time
                 }
-
-                this.comments.push(comment);
+                CommentFeed.addComment(comment);
+                this.hideForm(true);        
             }
 
         };

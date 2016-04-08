@@ -6,7 +6,7 @@ define([
         return {
 
             player: null,
-            done: false,
+            done: false,            
 
             init: function() {
                 this.listen();
@@ -39,6 +39,11 @@ define([
                 });
             },
 
+            // Expose the YT object
+            getYT: function() {
+                return YT;
+            },
+
             initGlobalYTHandlers: function() {
 
                 window.onYouTubeIframeAPIReady = _.bind(this.initPlayer, this);
@@ -49,6 +54,7 @@ define([
                 }, this);
 
                 window.onPlayerStateChange = _.bind(function(event) {
+                    console.log('video player state change', event);
                     Events.trigger('VIDEO_STATE_CHANGE', event);
                 }, this);
             },
@@ -62,7 +68,7 @@ define([
             },
 
             getTime: function() {
-                
+                return this.player.getCurrentTime();
             }
 
         };
