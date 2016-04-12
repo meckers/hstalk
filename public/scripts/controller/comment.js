@@ -24,14 +24,14 @@ define([
             },
 
             showForm: function() {
-                $('#comment-area').css('display', 'block');
+                $('#comment-fields').css('display', 'block');
             },
 
             hideForm: function(clear) {
                 if (clear) {
                     $('#comment-text').val('');
                 }
-                $('#comment-area').css('display', 'none');  
+                $('#comment-fields').css('display', 'none');  
             },
 
             doComment: function() {

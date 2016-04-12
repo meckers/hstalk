@@ -16,6 +16,10 @@ a {
 	display: table;
 }
 
+#comment-fields {
+	display: none;
+}
+
 #comment-area {
 	width: 300px;
 }
