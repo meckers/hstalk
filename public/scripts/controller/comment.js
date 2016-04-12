@@ -21,6 +21,7 @@ define([
             pauseAndComment: function() {
                 Video.pauseVideo();
                 this.showForm();
+                $('#comment-text').focus();
             },
 
             showForm: function() {
@@ -42,7 +43,8 @@ define([
                     time: time
                 }
                 CommentFeed.addComment(comment);
-                this.hideForm(true);        
+                this.hideForm(true);     
+                Video.playVideo();   
             }
 
         };

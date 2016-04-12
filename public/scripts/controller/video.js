@@ -57,6 +57,10 @@ define([
                 }, this);
             },
 
+            playVideo: function() {
+                this.player.playVideo();
+            },
+
             stopVideo: function() {
                 this.player.stopVideo();
             },
