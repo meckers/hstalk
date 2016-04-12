@@ -3,9 +3,10 @@ define([
     'controller/video',
     'controller/comment',
     'controller/comment-feed',
+    'controller/comment-feed-ui',
     'lib/events'
 ],
-    function(Mediator, Video, Comment, CommentFeed, Events) {
+    function(Mediator, Video, Comment, CommentFeed, CommentFeedUI, Events) {
 
         return {
 
@@ -20,6 +21,7 @@ define([
                 Mediator.init();
                 Video.init();
                 CommentFeed.init();
+                CommentFeedUI.init();
                 Comment.init();
             }
 

@@ -2,9 +2,10 @@ define([
     'controller/video',
     'controller/comment-feed',
     'lib/events',
+    'lib/guid',
     'underscore',
     'jquery'    
-], function(Video, CommentFeed, Events, _, $) {
+], function(Video, CommentFeed, Events, Guid, _, $) {
 
         return {
 
@@ -36,6 +37,7 @@ define([
             doComment: function() {
                 var time = Video.getTime();
                 var comment = {
+                    id: Guid.guid(3),
                     text: $('#comment-text').val(),
                     time: time
                 }

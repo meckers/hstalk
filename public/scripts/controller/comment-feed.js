@@ -1,9 +1,10 @@
 define([
     'controller/video',
+    'controller/comment-feed-ui',
     'lib/events',
     'underscore',
     'jquery'    
-], function(Video, Events, _, $) {
+], function(Video, CommentFeedUI, Events, _, $) {
 
         return {
 
@@ -20,7 +21,7 @@ define([
 
             onVideoStateChange: function(event) {
                 
-                this.renderFeed();
+                this.updateFeed();
 
                 if (event.data == YT.PlayerState.PLAYING) {
                     this.startPoll();      
@@ -39,13 +40,18 @@ define([
             },
 
             poll: function() {                
-                this.renderFeed();
+                this.updateFeed();
+            },
+
+            updateFeed: function() {
+                var time = Video.getTime();
+                var comments = this.getCommentsBefore(time);
+                CommentFeedUI.renderFeed(comments);                
             },
 
             addComment: function(comment) {
-                console.log('adding comment', comment);
                 this.comments.push(comment);
-                this.appendComment(comment);
+                CommentFeedUI.appendComment(comment);
             },
 
             getSortedComments: function() {
@@ -58,32 +64,6 @@ define([
                     return c.time < time;
                 });
                 return resultingComments;
-            },
-
-            // this could probably be lifted out to a UI class/controller
-            appendComment: function(c) {
-                var commentEl = this.createCommentElement(c);
-                $('#feed-list').append(commentEl);
-            },
-
-            // this could probably be lifted out to a UI class/controller
-            renderFeed: function() {
-                var time = Video.getTime();
-                var feedList = $('#feed-list');
-                feedList.empty();
-                var comments = this.getCommentsBefore(time);
-                _.each(comments, _.bind(function(c) { 
-                    var commentEl = this.createCommentElement(c);
-                    feedList.append(commentEl);
-                }, this));
-            },
-
-            // this could probably be lifted out to a UI class/controller
-            createCommentElement: function(c) {
-                var ce = $('<li></li>');
-                ce.addClass('comment-line');
-                ce.html(c.time + ' | ' + c.text);                
-                return ce;
             }
 
         };
