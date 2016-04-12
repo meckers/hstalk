@@ -27,8 +27,8 @@ define([
 
             initPlayer: function() {
                 this.player = new YT.Player('player', {
-                    height: '390',
-                    width: '640',
+                    height: '100%',
+                    width: '100%',
                     videoId: 'IMKuVsGhVuU',
                     events: {
                     'onReady': onPlayerReady,

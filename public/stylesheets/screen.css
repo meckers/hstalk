@@ -1,13 +1,35 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html, body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;  
 }
 
 a {
   color: #00B7FF;
 }
 
+#main-container {
+	width: 100%;
+	height: 100%;
+	display: table;
+}
 
 #comment-area {
-	display: none;
+	width: 300px;
+}
+
+#player-area {
+	background-color:blue;
+}
+
+#comment-area, #player-area {
+	vertical-align: top;
+	display: table-cell;  
+}
+
+#player {
+	width: 100%;
+	height: 100%;
 }

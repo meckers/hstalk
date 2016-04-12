@@ -9,6 +9,7 @@ define([
         return {
 
             pollInterval: null,
+            pollRate: 500,
 
             init: function() {
                 this.listen();
@@ -29,7 +30,7 @@ define([
             },
 
             startPoll: function() {
-                this.pollInterval = window.setInterval(_.bind(this.poll, this), 1000);
+                this.pollInterval = window.setInterval(_.bind(this.poll, this), this.pollRate);
             },
 
             stopPoll: function() {
@@ -63,6 +64,7 @@ define([
             createCommentElement: function(c) {
                 var ce = $('<li></li>');
                 ce.addClass('comment-line');
+                ce.attr('commentId', c.id);
                 ce.html(c.time + ' | ' + c.text);                
                 return ce;
             }            
