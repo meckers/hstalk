@@ -1,14 +1,13 @@
 define([
     'controller/video',
-    'controller/comment-feed-ui',
+    'collections/comment-collection',
     'lib/events',
     'underscore',
     'jquery'    
-], function(Video, CommentFeedUI, Events, _, $) {
+], function(Video, CommentCollection, Events, _, $) {
 
         return {
 
-            comments: [],
             pollInterval: null,
 
             init: function() {
@@ -19,10 +18,8 @@ define([
                 Events.register('VIDEO_STATE_CHANGE', this, _.bind(this.onVideoStateChange, this));
             },
 
-            onVideoStateChange: function(event) {
-                
+            onVideoStateChange: function(event) {                
                 this.updateFeed();
-
                 if (event.data == YT.PlayerState.PLAYING) {
                     this.startPoll();      
                 }                
@@ -43,28 +40,32 @@ define([
                 this.updateFeed();
             },
 
+            addComment: function(comment) {
+                CommentCollection.addComment(comment);
+                this.updateFeed();
+            },            
+
             updateFeed: function() {
                 var time = Video.getTime();
-                var comments = this.getCommentsBefore(time);
-                CommentFeedUI.renderFeed(comments);                
+                var comments = CommentCollection.getCommentsBefore(time);
+                this.renderFeed(comments);                
             },
 
-            addComment: function(comment) {
-                this.comments.push(comment);
-                CommentFeedUI.appendComment(comment);
+            renderFeed: function(comments) {            
+                var feedList = $('#feed-list');
+                feedList.empty();
+                _.each(comments, _.bind(function(c) { 
+                    var commentEl = this.createCommentElement(c);
+                    feedList.append(commentEl);
+                }, this));
             },
 
-            getSortedComments: function() {
-                return _.sortBy(this.comments, function(c) { return c.time; })  
-            },
-
-            getCommentsBefore: function(time) {
-                var sortedComments = this.getSortedComments();
-                var resultingComments = _.filter(sortedComments, function(c) {
-                    return c.time < time;
-                });
-                return resultingComments;
-            }
+            createCommentElement: function(c) {
+                var ce = $('<li></li>');
+                ce.addClass('comment-line');
+                ce.html(c.time + ' | ' + c.text);                
+                return ce;
+            }            
 
         };
 
